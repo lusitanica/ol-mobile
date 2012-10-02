@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>Altitudes</title>
+
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+
+	<link rel="stylesheet" href="dist/leaflet.css" />
+
+	<!--[if lte IE 8]><link rel="stylesheet" href="dist/leaflet.ie.css" /><![endif]-->
+
+	<style>
+
+		body {
+
+			padding: 0;
+
+			margin: 0;
+
+		}
+
+		html, body, #map {
+
+			height: 100%;
+
+		}
+
+	</style>
+
+</head>
+
+<body>
+
+	<div id="map"></div>
+
+	<script src="dist/leaflet.js"></script>
+	<script src='dist/jsr_class.js'></script>
+
+	<script>
+	
+		var coords, altitude;
+		var map = L.map('map').setView([-10.333333,-53.200000], 5);
+
+
+
+		var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+		map.addLayer(osm);
+
+
+
+		function onClick(e) {
+			if (e.latlng) {
+				coords = e.latlng;
+				request = 'http://ws.geonames.org/astergdemJSON?lat=' + coords.lat + '&lng=' + coords.lng + '&callback=showAltitude'; 		
+				aObj = new JSONscriptRequest(request);
+				aObj.buildScriptTag();
+				aObj.addScriptTag();			
+			}
+
+		}
+
+
+		function showAltitude(jData) {
+			altitude = jData.astergdem;
+			if (altitude==-9999) {altitude=0;}
+			var myHtml = 'Latitude: ' + coords.lat.toFixed(6) + '<br />  Longitude: ' + coords.lng.toFixed(6) + '<br />  Altitude: ' + altitude + ' metros';
+			L.marker(coords).addTo(map).bindPopup(myHtml).openPopup();
+
+		}
+
+		map.on('click', onClick);
+
+		//map.locate({setView: true, maxZoom: 16});
+
+	</script>
+
+</body>
+
+</html>
+

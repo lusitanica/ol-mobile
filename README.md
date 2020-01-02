@@ -1,6 +1,6 @@
 # ol-mobile
 OL Mobile Examples
 
-Old placeholder for tthe code to test build.phonegap.com
+Old placeholder for the code to test build.phonegap.com
 
-Before that, OpenLayers Mobile Samples <2.10
+Used to be Openlayers 2.12 Mobile (2012)
